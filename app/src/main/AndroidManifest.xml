@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EstadisticasActivity"></activity>
+        <activity android:name=".EstadisticasActivity" />
         <activity android:name=".AnalizarObjetoActivity" />
         <activity android:name=".BuscarDispositivosActivity" />
         <activity android:name=".MainActivity">

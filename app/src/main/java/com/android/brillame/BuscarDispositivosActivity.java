@@ -29,6 +29,7 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
     Button btnBuscarDispositivos;
     Button btnDetenerBusqueda;
     Button btnVerVinculados;
+    Button btnBluetoothOn;
     ListView listaView;
 
     @Override
@@ -37,39 +38,7 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_buscar_dispositivos);
 
         setearFuncionalidadBotones();
-
-
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        mDispositivoAdapter = new DispositivoAdapter();
-        RecyclerView recyclerView = findViewById(R.id.rvContacts);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(mDispositivoAdapter);
-        IntentFilter filterBusqueda = new IntentFilter();
-        filterBusqueda.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-        filterBusqueda.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-        filterBusqueda.addAction(BluetoothDevice.ACTION_FOUND);
-        registerReceiver(mBroadcastReceiver, filterBusqueda);
-
-        listaView = findViewById(R.id.listaDispositivos);
-
-        listaView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                BluetoothDevice item = (BluetoothDevice) parent.getItemAtPosition(position);
-                Log.d("MAC ADDRESS", item.getAddress());
-            }
-        });
-
-       // RecyclerView rvContacts = (RecyclerView) findViewById(R.id.rvContacts);
-
-       /* // Initialize contacts
-        contacts = Contact.createContactsList(20);
-        // Create adapter passing in the sample user data
-        DispositivoAdapter adapter = new DispositivoAdapter(contacts);
-        // Attach the adapter to the recyclerview to populate items
-        rvContacts.setAdapter(adapter);
-        // Set layout manager to position the items
-        rvContacts.setLayoutManager(new LinearLayoutManager(this));*/
+        configurarBluetooth();
 
     }
 
@@ -77,6 +46,7 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
         btnBuscarDispositivos = this.findViewById(R.id.iniciarBusqueda);
         btnDetenerBusqueda = this.findViewById(R.id.detenerBusqueda);
         btnVerVinculados = this.findViewById(R.id.verVinculados);
+        btnBluetoothOn = this.findViewById(R.id.btnBluetoothOn);
 
         btnBuscarDispositivos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +68,46 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
                 onVerVinculadosClick(v);
             }
         });
+
+        this.btnBluetoothOn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBtnBluetoothOnClick(v);
+            }
+        });
+    }
+
+    private void configurarBluetooth(){
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        mDispositivoAdapter = new DispositivoAdapter();
+
+//        RecyclerView recyclerView = findViewById(R.id.rvContacts);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerView.setAdapter(mDispositivoAdapter);
+//        IntentFilter filterBusqueda = new IntentFilter();
+
+//        filterBusqueda.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+//        filterBusqueda.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+//        filterBusqueda.addAction(BluetoothDevice.ACTION_FOUND);
+//
+//        registerReceiver(mBroadcastReceiver, filterBusqueda);
+
+        listaView = findViewById(R.id.listaDispositivos);
+
+        listaView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                BluetoothDevice item = (BluetoothDevice) parent.getItemAtPosition(position);
+                Log.d("MAC ADDRESS", item.getAddress());
+            }
+        });
+
+        if(!mBluetoothAdapter.isEnabled())
+        {
+            btnBuscarDispositivos.setEnabled(false);
+            btnDetenerBusqueda.setEnabled(false);
+            btnVerVinculados.setEnabled(false);
+        }
     }
 
     @Override
@@ -152,8 +162,17 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
 
             listaView.setAdapter(adapter);
         }
+    }
 
-
+    public void onBtnBluetoothOnClick(View view) {
+        if(!mBluetoothAdapter.isEnabled())
+        {
+            mBluetoothAdapter.enable();
+            Log.i("Log", "Bluetooth is Enabled");
+            btnBuscarDispositivos.setEnabled(true);
+            btnDetenerBusqueda.setEnabled(true);
+            btnVerVinculados.setEnabled(true);
+        }
     }
 
     private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
