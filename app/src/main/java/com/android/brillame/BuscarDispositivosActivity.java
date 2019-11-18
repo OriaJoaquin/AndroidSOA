@@ -112,7 +112,7 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        unregisterReceiver(mBroadcastReceiver);
+        //unregisterReceiver(mBroadcastReceiver);
         super.onDestroy();
     }
 
