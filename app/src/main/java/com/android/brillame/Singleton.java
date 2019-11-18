@@ -7,6 +7,7 @@ public class Singleton {
     private Number pesoCanastoNoBrillante;
     private Number cantidadElementosCanastoBrillante;
     private Number cantidadElementosCanastoNoBrillante;
+    private String  macAVincular;
 
 
     public static Singleton getInstance() {
@@ -20,7 +21,7 @@ public class Singleton {
         pesoCanastoNoBrillante = 0;
         cantidadElementosCanastoBrillante = 0;
         cantidadElementosCanastoNoBrillante = 0;
-
+        macAVincular = "";
     }
 
     public Number getValuePesoCanastoBrillante(){
@@ -35,6 +36,9 @@ public class Singleton {
     public Number getValueCantidadElementosCanastoNoBrillante(){
         return cantidadElementosCanastoNoBrillante;
     }
+    public String getValueMacAVincular(){
+        return macAVincular;
+    }
 
     public void setValuePesoCanastoBrillante(Number value) {
         this.pesoCanastoBrillante = value;
@@ -47,5 +51,8 @@ public class Singleton {
     }
     public void setValueCantidadElementosCanastoNoBrillante(Number value) {
         this.cantidadElementosCanastoNoBrillante = value;
+    }
+    public void setValueMacAVincular(String value) {
+        this.macAVincular = value;
     }
 }
