@@ -57,14 +57,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setearFuncionalidadBotones();
         singleton = Singleton.getInstance();
+        setearFuncionalidadBotones();
     }
 
     private void setearFuncionalidadBotones() {
         btnAbrirActivityAnalizarObjeto = this.findViewById(R.id.btnAnalizarObjeto);
         btnAbrirActivityBuscarDispositivos = this.findViewById(R.id.btnBuscarDispositivos);
         btnAbrirActivityEstadisticas = this.findViewById(R.id.btnEstadisticas);
+        Log.d("botonBOL",String.valueOf(singleton.getValuecontenedorBrillantesFull()));
+        Log.d("botonBOL",String.valueOf(singleton.getValuecontenedorNoBrillantesFull()));
+        btnAbrirActivityAnalizarObjeto.setEnabled(!singleton.getValuecontenedorBrillantesFull() && !singleton.getValuecontenedorNoBrillantesFull());
 
         btnAbrirActivityAnalizarObjeto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void abrirActivityEstadistica(View view) {
+        singleton.setValuecontenedorBrillantesFull(true);
+        Log.d("pru",String.valueOf(singleton.getValuecontenedorBrillantesFull()));
         Intent intent = new Intent(this, EstadisticasActivity.class);
         startActivity(intent);
     }

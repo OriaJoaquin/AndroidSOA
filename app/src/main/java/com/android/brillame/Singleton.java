@@ -1,6 +1,7 @@
 package com.android.brillame;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 public class Singleton {
@@ -10,7 +11,9 @@ public class Singleton {
     private Number pesoCanastoNoBrillante;
     private Number cantidadElementosCanastoBrillante;
     private Number cantidadElementosCanastoNoBrillante;
-    private String  macAVincular;
+    private String macAVincular;
+    private boolean contenedorBrillantesFull;
+    private boolean contenedorNoBrillantesFull;
 
 
     public static Singleton getInstance() {
@@ -25,42 +28,70 @@ public class Singleton {
         cantidadElementosCanastoBrillante = 0;
         cantidadElementosCanastoNoBrillante = 0;
         macAVincular = "";
+        contenedorBrillantesFull = false;
+        contenedorNoBrillantesFull = false;
     }
 
-    public Number getValuePesoCanastoBrillante(){
+    public Number getValuePesoCanastoBrillante() {
         return pesoCanastoBrillante;
     }
-    public Number getValuePesoCanastoNoBrillante(){
+
+    public Number getValuePesoCanastoNoBrillante() {
         return pesoCanastoNoBrillante;
     }
-    public Number getValueCantidadElementosCanastoBrillante(){
+
+    public Number getValueCantidadElementosCanastoBrillante() {
         return cantidadElementosCanastoBrillante;
     }
-    public Number getValueCantidadElementosCanastoNoBrillante(){
+
+    public Number getValueCantidadElementosCanastoNoBrillante() {
         return cantidadElementosCanastoNoBrillante;
     }
-    public String getValueMacAVincular(){
+
+    public String getValueMacAVincular() {
         return macAVincular;
     }
+
+    public boolean getValuecontenedorBrillantesFull() {
+        return contenedorBrillantesFull;
+    }
+
+    public boolean getValuecontenedorNoBrillantesFull() {
+        return contenedorNoBrillantesFull;
+    }
+
 
     public void setValuePesoCanastoBrillante(Number value) {
         this.pesoCanastoBrillante = value;
     }
+
     public void setValuePesoCanastoNoBrillante(Number value) {
         this.pesoCanastoNoBrillante = value;
     }
+
     public void setValueCantidadElementosCanastoBrillante(Number value) {
         this.cantidadElementosCanastoBrillante = value;
     }
+
     public void setValueCantidadElementosCanastoNoBrillante(Number value) {
         this.cantidadElementosCanastoNoBrillante = value;
     }
+
     public void setValueMacAVincular(String value) {
         this.macAVincular = value;
     }
 
-    public void showToast(String msg, Context context){
-       // Toast.makeText(this,msg, Toast.LENGTH_LONG).show();
+    public void setValuecontenedorBrillantesFull(boolean lleno) {
+        contenedorBrillantesFull = lleno;
+    }
+
+    public void setValuecontenedorNoBrillantesFull(boolean lleno) {
+        contenedorNoBrillantesFull = lleno;
+    }
+
+
+    public void showToast(String msg, Context context) {
+        // Toast.makeText(this,msg, Toast.LENGTH_LONG).show();
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
