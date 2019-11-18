@@ -62,14 +62,25 @@ public class MainActivity extends AppCompatActivity {
         setearFuncionalidadBotones();
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        boolean estaLleno =  singleton.getValuecontenedorBrillantesFull() || singleton.getValuecontenedorNoBrillantesFull();
+
+        if(estaLleno){
+            btnAbrirActivityAnalizarObjeto.setEnabled(false);
+            singleton.showToast("El cesto está lleno", this);
+        } else {
+            btnAbrirActivityAnalizarObjeto.setEnabled(true);
+        }
+    }
+
     private void setearFuncionalidadBotones() {
         btnAbrirActivityAnalizarObjeto = this.findViewById(R.id.btnAnalizarObjeto);
         btnAbrirActivityBuscarDispositivos = this.findViewById(R.id.btnBuscarDispositivos);
         btnAbrirActivityEstadisticas = this.findViewById(R.id.btnEstadisticas);
 
-        Log.d("botonBOL",String.valueOf(singleton.getValuecontenedorBrillantesFull()));
-        Log.d("botonBOL",String.valueOf(singleton.getValuecontenedorNoBrillantesFull()));
-        btnAbrirActivityAnalizarObjeto.setEnabled(!singleton.getValuecontenedorBrillantesFull() && !singleton.getValuecontenedorNoBrillantesFull());
 
         btnAbrirActivityDiscoMode = this.findViewById(R.id.btnDiscoMode);
 

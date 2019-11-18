@@ -59,6 +59,8 @@ public class DiscoModeActivity extends AppCompatActivity {
                 singleton.showToast("Me estás sacudiendo!!", getApplicationContext());
 
                 /*Acá debería ir el código de enviar el comando dance por bluetooth*/
+                singleton.setValuecontenedorNoBrillantesFull(true);
+                singleton.setValuecontenedorBrillantesFull(true);
             }
         }
 
