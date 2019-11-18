@@ -51,13 +51,16 @@ public class MainActivity extends AppCompatActivity {
     Button btnAbrirActivityAnalizarObjeto;
     Button btnAbrirActivityBuscarDispositivos;
     Button btnAbrirActivityEstadisticas;
+    Singleton singleton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         setearFuncionalidadBotones();
+        singleton = Singleton.getInstance();
+
 
     }
 

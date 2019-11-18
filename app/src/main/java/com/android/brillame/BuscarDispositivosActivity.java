@@ -31,14 +31,15 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
     Button btnVerVinculados;
     Button btnBluetoothOn;
     ListView listaView;
+    Singleton singleton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buscar_dispositivos);
-
         setearFuncionalidadBotones();
         configurarBluetooth();
+        singleton = Singleton.getInstance();
 
     }
 
@@ -77,7 +78,7 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
         });
     }
 
-    private void configurarBluetooth(){
+    private void configurarBluetooth() {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         mDispositivoAdapter = new DispositivoAdapter();
 
@@ -102,8 +103,7 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
             }
         });
 
-        if(!mBluetoothAdapter.isEnabled())
-        {
+        if (!mBluetoothAdapter.isEnabled()) {
             btnBuscarDispositivos.setEnabled(false);
             btnDetenerBusqueda.setEnabled(false);
             btnVerVinculados.setEnabled(false);
@@ -148,8 +148,8 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
 
             if (setDispositivos.size() > 0) {
                 for (BluetoothDevice currentDevice : setDispositivos) {
-                    Log.i(TAG,"Device Name " + currentDevice.getName());
-                    Log.i(TAG,"Device Name " + currentDevice.getAddress());
+                    Log.i(TAG, "Device Name " + currentDevice.getName());
+                    Log.i(TAG, "Device Name " + currentDevice.getAddress());
 
                 }
             }
@@ -165,8 +165,7 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
     }
 
     public void onBtnBluetoothOnClick(View view) {
-        if(!mBluetoothAdapter.isEnabled())
-        {
+        if (!mBluetoothAdapter.isEnabled()) {
             mBluetoothAdapter.enable();
             Log.i("Log", "Bluetooth is Enabled");
             btnBuscarDispositivos.setEnabled(true);
