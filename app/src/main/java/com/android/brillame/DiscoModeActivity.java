@@ -18,6 +18,7 @@ public class DiscoModeActivity extends AppCompatActivity {
     private float aceleracionValor;
     private float ultimoAceleracionValor;
     private float shake;
+    private int numeroSacudidas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class DiscoModeActivity extends AppCompatActivity {
 
         singleton = singleton.getInstance();
 
-        sm =(SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sm.registerListener(sensorListener, sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
 
         aceleracionValor = SensorManager.GRAVITY_EARTH;
@@ -35,32 +36,47 @@ public class DiscoModeActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         singleton.showToast("Sacude el teléfono para activar el modo disco!!", this);
+        singleton.setValuesacudidas(0);
+      /*  numeroSacudidas = 0;
+        Log.d("prueboSAacudidas", String.valueOf(numeroSacudidas));
+        */
+    }
 
+    @Override
+    public void onPause(){
+        super.onPause();
+        Log.d("pausa","pausaaaaa");
+    }
 
+    @Override
+    public void onStop(){
+        super.onStop();
+        Log.d("stop","stopppp");
     }
 
     private final SensorEventListener sensorListener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent sensorEvent) {
-            float x =  sensorEvent.values[0];
-            float y =  sensorEvent.values[1];
-            float z =  sensorEvent.values[2];
+            float x = sensorEvent.values[0];
+            float y = sensorEvent.values[1];
+            float z = sensorEvent.values[2];
 
             ultimoAceleracionValor = aceleracionValor;
-            aceleracionValor = (float) Math.sqrt((double)(x*x+y*y+z*z));
+            aceleracionValor = (float) Math.sqrt((double) (x * x + y * y + z * z));
             float delta = aceleracionValor - ultimoAceleracionValor;
             shake = shake * 0.9F + delta;
 
-            Log.i("SHAKE", String.valueOf(shake));
-            if(shake > 5){
-                singleton.showToast("Me estás sacudiendo!!", getApplicationContext());
-
-                /*Acá debería ir el código de enviar el comando dance por bluetooth*/
-                singleton.setValuecontenedorNoBrillantesFull(true);
-                singleton.setValuecontenedorBrillantesFull(true);
+            if (shake > 5) {
+                singleton.setValuesacudidas(singleton.getValuesacudidas().intValue()+1);
+                if (singleton.getValuesacudidas().intValue() >= 3) {
+                    //COMUNICACION CON BT
+                    singleton.showToast("Iniciar el modo disco de la caja magica", getApplicationContext());
+                }
+                else{
+                }
             }
         }
 

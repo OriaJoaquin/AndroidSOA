@@ -14,6 +14,7 @@ public class Singleton {
     private String macAVincular;
     private boolean contenedorBrillantesFull;
     private boolean contenedorNoBrillantesFull;
+    private Number sacudidas;
 
 
     public static Singleton getInstance() {
@@ -30,6 +31,7 @@ public class Singleton {
         macAVincular = "";
         contenedorBrillantesFull = false;
         contenedorNoBrillantesFull = false;
+        sacudidas = 0;
     }
 
     public Number getValuePesoCanastoBrillante() {
@@ -44,6 +46,9 @@ public class Singleton {
         return cantidadElementosCanastoBrillante;
     }
 
+    public Number getValuesacudidas() {
+        return sacudidas;
+    }
     public Number getValueCantidadElementosCanastoNoBrillante() {
         return cantidadElementosCanastoNoBrillante;
     }
@@ -89,6 +94,9 @@ public class Singleton {
         contenedorNoBrillantesFull = lleno;
     }
 
+    public void setValuesacudidas(Number value){
+        sacudidas = value;
+    }
 
     public void showToast(String msg, Context context) {
         // Toast.makeText(this,msg, Toast.LENGTH_LONG).show();
