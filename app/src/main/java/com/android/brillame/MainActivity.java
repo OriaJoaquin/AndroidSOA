@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnAbrirActivityAnalizarObjeto;
     Button btnAbrirActivityBuscarDispositivos;
     Button btnAbrirActivityEstadisticas;
+    Button btnAbrirActivityDiscoMode;
     Singleton singleton;
 
     @Override
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         btnAbrirActivityAnalizarObjeto = this.findViewById(R.id.btnAnalizarObjeto);
         btnAbrirActivityBuscarDispositivos = this.findViewById(R.id.btnBuscarDispositivos);
         btnAbrirActivityEstadisticas = this.findViewById(R.id.btnEstadisticas);
+        btnAbrirActivityDiscoMode = this.findViewById(R.id.btnDiscoMode);
 
         btnAbrirActivityAnalizarObjeto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +88,16 @@ public class MainActivity extends AppCompatActivity {
                 abrirActivityEstadistica(v);
             }
         });
+
+        this.btnAbrirActivityDiscoMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                abrirActivityDiscoMode(v);
+            }
+        });
     }
+
+
 
     public void abrirActivityBuscarDispositivos(View view) {
         //Intent intent = new Intent(this, );77
@@ -101,6 +112,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void abrirActivityEstadistica(View view) {
         Intent intent = new Intent(this, EstadisticasActivity.class);
+        startActivity(intent);
+    }
+
+    private void abrirActivityDiscoMode(View view) {
+        Intent intent = new Intent(this, DiscoModeActivity.class);
         startActivity(intent);
     }
 

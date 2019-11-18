@@ -37,7 +37,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Estadisticas" />
-
+        <Button
+            android:id="@+id/btnDiscoMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Disco mode" />
 
 
 
