@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.Set;
 
 public class BuscarDispositivosActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+    private static final int REQUEST_ENABLE_BT = 0;
     private DispositivoAdapter mDispositivoAdapter;
     private BluetoothAdapter mBluetoothAdapter;
     Button btnBuscarDispositivos;
@@ -165,13 +167,24 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
     }
 
     public void onBtnBluetoothOnClick(View view) {
-        if (!mBluetoothAdapter.isEnabled()) {
-            mBluetoothAdapter.enable();
-            Log.i("Log", "Bluetooth is Enabled");
+        if(!mBluetoothAdapter.isEnabled())
+        {
+            //mBluetoothAdapter.enable();
+            showToast("Encendiendo bluetooth...");
+
+            Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(intent, REQUEST_ENABLE_BT);
+
             btnBuscarDispositivos.setEnabled(true);
             btnDetenerBusqueda.setEnabled(true);
             btnVerVinculados.setEnabled(true);
+        } else{
+            showToast("El bluetooth ya está encendido.");
         }
+    }
+
+    public void showToast(String msg){
+        Toast.makeText(this,msg, Toast.LENGTH_LONG).show();
     }
 
     private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
