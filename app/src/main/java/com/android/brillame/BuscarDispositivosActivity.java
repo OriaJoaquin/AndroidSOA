@@ -39,9 +39,9 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buscar_dispositivos);
+        singleton = Singleton.getInstance();
         setearFuncionalidadBotones();
         configurarBluetooth();
-        singleton = Singleton.getInstance();
 
     }
 
