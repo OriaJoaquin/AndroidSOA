@@ -102,6 +102,7 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 BluetoothDevice item = (BluetoothDevice) parent.getItemAtPosition(position);
                 Log.d("MAC ADDRESS", item.getAddress());
+                singleton.setValueMacAVincular(item.getAddress());
             }
         });
 
@@ -148,13 +149,13 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
             Log.d(TAG, "onVerVinculadosClick : Hay " + setDispositivos.size() + " dispositivos vinculados");
 
 
-            if (setDispositivos.size() > 0) {
+            /*if (setDispositivos.size() > 0) {
                 for (BluetoothDevice currentDevice : setDispositivos) {
                     Log.i(TAG, "Device Name " + currentDevice.getName());
                     Log.i(TAG, "Device Name " + currentDevice.getAddress());
 
                 }
-            }
+            }*/
 
             ArrayList<BluetoothDevice> dispositivos = new ArrayList<>();
             dispositivos.addAll(setDispositivos);
@@ -170,7 +171,8 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
         if(!mBluetoothAdapter.isEnabled())
         {
             //mBluetoothAdapter.enable();
-            showToast("Encendiendo bluetooth...");
+            singleton.showToast("Encendiendo bluetooth...",this);
+
 
             Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(intent, REQUEST_ENABLE_BT);
@@ -179,13 +181,11 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
             btnDetenerBusqueda.setEnabled(true);
             btnVerVinculados.setEnabled(true);
         } else{
-            showToast("El bluetooth ya está encendido.");
+            singleton.showToast("El bluetooth ya está encendido.",this);
         }
     }
 
-    public void showToast(String msg){
-        Toast.makeText(this,msg, Toast.LENGTH_LONG).show();
-    }
+
 
     private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override

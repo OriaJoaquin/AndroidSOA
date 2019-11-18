@@ -1,5 +1,8 @@
 package com.android.brillame;
 
+import android.content.Context;
+import android.widget.Toast;
+
 public class Singleton {
 
     private static Singleton instance;
@@ -55,4 +58,10 @@ public class Singleton {
     public void setValueMacAVincular(String value) {
         this.macAVincular = value;
     }
+
+    public void showToast(String msg, Context context){
+       // Toast.makeText(this,msg, Toast.LENGTH_LONG).show();
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+    }
+
 }
