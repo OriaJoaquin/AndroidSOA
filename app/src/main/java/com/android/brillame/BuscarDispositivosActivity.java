@@ -26,7 +26,6 @@ import java.util.Set;
 public class BuscarDispositivosActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private static final int REQUEST_ENABLE_BT = 0;
-    private DispositivoAdapter mDispositivoAdapter;
     private BluetoothAdapter mBluetoothAdapter;
     Button btnBuscarDispositivos;
     Button btnDetenerBusqueda;
@@ -88,7 +87,6 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
 
     private void configurarBluetooth() {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        mDispositivoAdapter = new DispositivoAdapter();
 
 //        RecyclerView recyclerView = findViewById(R.id.rvContacts);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -211,26 +209,4 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
             }
         }
     }
-
-
-
-    private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            switch (action) {
-                case BluetoothAdapter.ACTION_DISCOVERY_STARTED:
-                    Log.d(TAG, "OnReceive : Busqueda de dispositivos iniciada");
-                    break;
-                case BluetoothAdapter.ACTION_DISCOVERY_FINISHED:
-                    Log.d(TAG, "OnReceive : Busqueda de dispositivos finalizada");
-                    break;
-                case BluetoothDevice.ACTION_FOUND:
-                    BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                    Log.d(TAG, "OnReceive : Dispositivo encontrado: " + device.getName());
-                    mDispositivoAdapter.agregarDispositivos(device);
-                    break;
-            }
-        }
-    };
 }
