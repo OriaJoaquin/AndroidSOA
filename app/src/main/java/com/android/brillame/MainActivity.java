@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnAbrirActivityEstadisticas;
     Button btnAbrirActivityDiscoMode;
     Button btnAbrirActivityPrenderApagarLuces;
+    Button btnAbrirActivityMoverCaja;
     Singleton singleton;
 
     @Override
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         btnAbrirActivityEstadisticas = this.findViewById(R.id.btnEstadisticas);
         btnAbrirActivityDiscoMode = this.findViewById(R.id.btnDiscoMode);
         btnAbrirActivityPrenderApagarLuces = this.findViewById(R.id.btnPrenderApagar);
+        btnAbrirActivityMoverCaja = this.findViewById(R.id.btnMoverCaja);
 
 
         btnAbrirActivityAnalizarObjeto.setOnClickListener(new View.OnClickListener() {
@@ -119,6 +121,13 @@ public class MainActivity extends AppCompatActivity {
                 abrirActivityPrenderApagarLuces(v);
             }
         });
+
+        this.btnAbrirActivityMoverCaja.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                abrirActivityMoverCaja(v);
+            }
+        });
     }
 
 
@@ -144,10 +153,16 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void abrirActivityPrenderApagarLuces(View v) {
+    private void abrirActivityPrenderApagarLuces(View view) {
         Intent intent = new Intent(this, PrenderApagarLucesActivity.class);
         startActivity(intent);
     }
+
+    private void abrirActivityMoverCaja(View view) {
+        Intent intent = new Intent(this, MoverCajaActivity.class);
+        startActivity(intent);
+    }
+
 
 
 }

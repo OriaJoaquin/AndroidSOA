@@ -50,6 +50,12 @@
             android:layout_height="wrap_content"
             android:text="Prender/Apagar luces" />
 
+        <Button
+            android:id="@+id/btnMoverCaja"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mover caja" />
+
 
 
     </LinearLayout>
