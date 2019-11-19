@@ -6,19 +6,17 @@ import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.hardware.SensorListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 
 public class DiscoModeActivity extends AppCompatActivity {
     private Singleton singleton;
-    private SensorManager sm;
+    private SensorManager mSensorManager;
 
     private float aceleracionValor;
     private float ultimoAceleracionValor;
     private float shake;
-    private int numeroSacudidas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +25,8 @@ public class DiscoModeActivity extends AppCompatActivity {
 
         singleton = singleton.getInstance();
 
-        sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        sm.registerListener(sensorListener, sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mSensorManager.registerListener(sensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
 
         aceleracionValor = SensorManager.GRAVITY_EARTH;
         ultimoAceleracionValor = SensorManager.GRAVITY_EARTH;
@@ -40,22 +38,14 @@ public class DiscoModeActivity extends AppCompatActivity {
         super.onResume();
         singleton.showToast("Sacude el teléfono para activar el modo disco!!", this);
         singleton.setValuesacudidas(0);
-      /*  numeroSacudidas = 0;
-        Log.d("prueboSAacudidas", String.valueOf(numeroSacudidas));
-        */
     }
 
     @Override
-    public void onPause(){
+    protected void onPause() {
         super.onPause();
-        Log.d("pausa","pausaaaaa");
+        mSensorManager.unregisterListener(sensorListener);
     }
 
-    @Override
-    public void onStop(){
-        super.onStop();
-        Log.d("stop","stopppp");
-    }
 
     private final SensorEventListener sensorListener = new SensorEventListener() {
         @Override

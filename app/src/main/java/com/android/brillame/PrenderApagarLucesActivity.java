@@ -24,26 +24,25 @@ public class PrenderApagarLucesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_prender_apagar_luces);
         imagenFoco = this.findViewById(R.id.imageViewFoco);
 
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        mSensorManager.registerListener(sensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY), SensorManager.SENSOR_DELAY_NORMAL);
+        configurarSensor();
     }
-
 
     @Override
     protected void onResume() {
         super.onResume();
-      //  mSensorManager.registerListener(this, mProximity, SensorManager.SENSOR_DELAY_NORMAL);
+        //  mSensorManager.registerListener(this, mProximity, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-      //  mSensorManager.unregisterListener(this);
+        mSensorManager.unregisterListener(sensorListener);
     }
 
-
-
-
+    private void configurarSensor(){
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mSensorManager.registerListener(sensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY), SensorManager.SENSOR_DELAY_NORMAL);
+    }
 
     private final SensorEventListener sensorListener = new SensorEventListener() {
         @Override
