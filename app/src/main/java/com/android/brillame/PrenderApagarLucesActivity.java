@@ -49,12 +49,11 @@ public class PrenderApagarLucesActivity extends AppCompatActivity {
         @Override
         public void onSensorChanged(SensorEvent event) {
             if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
-                Log.d("pruebasensor",String.valueOf(event.values[0]));
-                Log.d("pruebasensor",String.valueOf(SENSOR_SENSITIVITY));
               //  if ((event.values[0] >= -SENSOR_SENSITIVITY) && (event.values[0] <= SENSOR_SENSITIVITY)) {
                 if (event.values[0] == 0) {
                     //near
-                    Toast.makeText(getApplicationContext(), "near", Toast.LENGTH_SHORT).show();
+                    //COMUNICACION CON BT
+                    Toast.makeText(getApplicationContext(), "Encender luces del led", Toast.LENGTH_SHORT).show();
                     imagenFoco.setImageResource(R.mipmap.light_on);
                 } else {
                     //far

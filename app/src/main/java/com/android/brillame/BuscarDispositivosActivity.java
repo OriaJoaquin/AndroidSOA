@@ -45,6 +45,12 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        habilitarBotones();
+    }
+
     private void setearFuncionalidadBotones() {
         btnBuscarDispositivos = this.findViewById(R.id.iniciarBusqueda);
         btnDetenerBusqueda = this.findViewById(R.id.detenerBusqueda);
@@ -106,10 +112,20 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
             }
         });
 
+        habilitarBotones();
+
+    }
+    public void habilitarBotones(){
         if (!mBluetoothAdapter.isEnabled()) {
             btnBuscarDispositivos.setEnabled(false);
             btnDetenerBusqueda.setEnabled(false);
             btnVerVinculados.setEnabled(false);
+        }
+        else{
+            btnBuscarDispositivos.setEnabled(true);
+            btnDetenerBusqueda.setEnabled(true);
+            btnVerVinculados.setEnabled(true);
+
         }
     }
 
@@ -170,18 +186,29 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
     public void onBtnBluetoothOnClick(View view) {
         if(!mBluetoothAdapter.isEnabled())
         {
-            //mBluetoothAdapter.enable();
-            singleton.showToast("Encendiendo bluetooth...",this);
-
-
             Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(intent, REQUEST_ENABLE_BT);
+            habilitarBotones();
 
-            btnBuscarDispositivos.setEnabled(true);
-            btnDetenerBusqueda.setEnabled(true);
-            btnVerVinculados.setEnabled(true);
+
         } else{
             singleton.showToast("El bluetooth ya está encendido.",this);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //la entrada fue por request de bt
+        if (requestCode == REQUEST_ENABLE_BT) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                singleton.showToast("Encendiendo bluetooth...",this);
+            }
+            else{
+                //rechazaste el encendido de bt
+                singleton.showToast("Rechazaste el encendido de bluetooth...",this);
+
+            }
         }
     }
 
@@ -202,7 +229,6 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
                     BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                     Log.d(TAG, "OnReceive : Dispositivo encontrado: " + device.getName());
                     mDispositivoAdapter.agregarDispositivos(device);
-
                     break;
             }
         }

@@ -16,7 +16,9 @@
         <ImageView
             android:id="@+id/imageViewFoco"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="225dp"
+            android:layout_marginTop="150dp"
+            android:layout_gravity="center"
             app:srcCompat="@mipmap/light_off" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
