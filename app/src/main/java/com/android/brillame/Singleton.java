@@ -1,8 +1,12 @@
 package com.android.brillame;
 
+import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
+
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class Singleton {
 
@@ -15,6 +19,12 @@ public class Singleton {
     private boolean contenedorBrillantesFull;
     private boolean contenedorNoBrillantesFull;
     private Number sacudidas;
+
+
+
+    BluetoothSocket socket;
+    private OutputStream outputStream;
+    private InputStream inputStream;
 
 
     public static Singleton getInstance() {
@@ -103,4 +113,27 @@ public class Singleton {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
+    public BluetoothSocket getSocket() {
+        return socket;
+    }
+
+    public OutputStream getOutputStream() {
+        return outputStream;
+    }
+
+    public InputStream getInputStream() {
+        return inputStream;
+    }
+
+    public void setSocket(BluetoothSocket socket) {
+        this.socket = socket;
+    }
+
+    public void setOutputStream(OutputStream outputStream) {
+        this.outputStream = outputStream;
+    }
+
+    public void setInputStream(InputStream inputStream) {
+        this.inputStream = inputStream;
+    }
 }

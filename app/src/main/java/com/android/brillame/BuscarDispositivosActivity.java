@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -19,13 +20,18 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 public class BuscarDispositivosActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private static final int REQUEST_ENABLE_BT = 0;
+    private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private BluetoothAdapter mBluetoothAdapter;
     Button btnBuscarDispositivos;
     Button btnDetenerBusqueda;
@@ -33,6 +39,11 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
     Button btnBluetoothOn;
     ListView listaView;
     Singleton singleton;
+
+    /*BluetoothSocket socket;
+    private OutputStream outputStream;
+    private InputStream inputStream;*/
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +118,23 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
                 BluetoothDevice item = (BluetoothDevice) parent.getItemAtPosition(position);
                 Log.d("MAC ADDRESS", item.getAddress());
                 singleton.setValueMacAVincular(item.getAddress());
+
+                try {
+                    singleton.setSocket(item.createRfcommSocketToServiceRecord(MY_UUID));
+
+                    singleton.getSocket().connect();
+
+                    singleton.setOutputStream(singleton.getSocket().getOutputStream());
+
+                    singleton.setInputStream(singleton.getSocket().getInputStream());
+
+//                    String comando = "1";
+//
+//                    singleton.getOutputStream().write(comando.getBytes());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 

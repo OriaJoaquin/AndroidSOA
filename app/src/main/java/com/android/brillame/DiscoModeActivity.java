@@ -9,6 +9,10 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+
+import java.io.IOException;
 
 public class DiscoModeActivity extends AppCompatActivity {
     private Singleton singleton;
@@ -17,11 +21,15 @@ public class DiscoModeActivity extends AppCompatActivity {
     private float aceleracionValor;
     private float ultimoAceleracionValor;
     private float shake;
+    private ImageView imgCarlton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_disco_mode);
+
+        imgCarlton = this.findViewById(R.id.imgCarlton);
+        imgCarlton.setVisibility(View.INVISIBLE);
 
         singleton = singleton.getInstance();
 
@@ -61,9 +69,17 @@ public class DiscoModeActivity extends AppCompatActivity {
 
             if (shake > 5) {
                 singleton.setValuesacudidas(singleton.getValuesacudidas().intValue()+1);
-                if (singleton.getValuesacudidas().intValue() >= 3) {
+                if (singleton.getValuesacudidas().intValue() >= 2) {
                     //COMUNICACION CON BT
                     singleton.showToast("Iniciar el modo disco de la caja magica", getApplicationContext());
+                    String comando = "2";
+
+                    try {
+                        singleton.getOutputStream().write(comando.getBytes());
+                        imgCarlton.setVisibility(View.VISIBLE);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
                 else{
                 }
