@@ -15,16 +15,18 @@ import android.widget.TextView;
 
 public class MoverCajaActivity extends AppCompatActivity {
 
-     private static final int ESTADO_IZQUIERDA = 0;
-     private static final int ESTADO_CENTRO = 1;
-     private static final int ESTADO_DERECHA= 2;
+    private static final int ESTADO_IZQUIERDA = 0;
+    private static final int ESTADO_CENTRO = 1;
+    private static final int ESTADO_DERECHA= 2;
+    private static final float sensibilidad = 4f;
 
-     int estadoActual;
-     SensorManager mSensorManager;
-     TextView tv;
-     TextView tvOrientacion;
-     ImageView imgFlecha;
-     Singleton singleton;
+    int estadoActual;
+    SensorManager mSensorManager;
+    TextView tv;
+    TextView tvOrientacion;
+    ImageView imgFlecha;
+    Singleton singleton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +70,7 @@ public class MoverCajaActivity extends AppCompatActivity {
                 return;
             }
 
-            if (sensorEvent.values[0] > 2.0F) {
-
-            }
-
-            if (sensorEvent.values[2] > 5f) { // anticlockwise
+            if (sensorEvent.values[2] > sensibilidad) { // anticlockwise
                 if(estadoActual == ESTADO_CENTRO){
                     imgFlecha.setImageResource(R.drawable.ic_arrow_left_solid);
                     estadoActual = ESTADO_IZQUIERDA;
@@ -88,12 +86,16 @@ public class MoverCajaActivity extends AppCompatActivity {
                     imgFlecha.setImageResource(R.drawable.ic_arrow_up_solid);
                     estadoActual = ESTADO_CENTRO;
                     tvOrientacion.setText("CENTRO");
+
+                    if(singleton.isConectado()){
+                        singleton.enviarComandoBluetooth(singleton.COMANDO_MOVER_CENTRO);
+                    } else {
+                        singleton.showToast("Debés estar conectado al bluetooth para realizar esta acción.", getApplicationContext());
+                    }
                 }
-
-
-
             }
-            if (sensorEvent.values[2] < -5f) { // clockwise
+
+            if (sensorEvent.values[2] < -sensibilidad) { // clockwise
                 if(estadoActual == ESTADO_CENTRO){
                     imgFlecha.setImageResource(R.drawable.ic_arrow_right_solid);
                     estadoActual = ESTADO_DERECHA;
@@ -108,6 +110,12 @@ public class MoverCajaActivity extends AppCompatActivity {
                     imgFlecha.setImageResource(R.drawable.ic_arrow_up_solid);
                     estadoActual = ESTADO_CENTRO;
                     tvOrientacion.setText("CENTRO");
+
+                    if(singleton.isConectado()){
+                        singleton.enviarComandoBluetooth(singleton.COMANDO_MOVER_CENTRO);
+                    } else {
+                        singleton.showToast("Debés estar conectado al bluetooth para realizar esta acción.", getApplicationContext());
+                    }
                 }
             }
 

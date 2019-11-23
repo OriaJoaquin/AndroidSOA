@@ -12,10 +12,11 @@ public class Singleton {
     public final String COMANDO_RESET = "0";
     public final String COMANDO_INICIAR = "1";
     public final String COMANDO_DISCO_MODE = "2";
-    public final String COMANDO_MOVER_IZQUIERDA = "3";
-    public final String COMANDO_MOVER_DERECHA = "4";
-    public final String COMANDO_LUCES_PRENDER = "10";
-    public final String COMANDO_LUCES_APAGAR = "11";
+    public final String COMANDO_MOVER_IZQUIERDA = "A";
+    public final String COMANDO_MOVER_DERECHA = "B";
+    public final String COMANDO_MOVER_CENTRO = "C";
+    public final String COMANDO_LUCES_PRENDER = "3";
+    public final String COMANDO_LUCES_APAGAR = "4";
 
     private static Singleton instance;
     private double pesoCanastoBrillante;
