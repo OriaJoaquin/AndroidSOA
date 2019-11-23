@@ -9,6 +9,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class Singleton {
+    public final String COMANDO_RESET = "0";
+    public final String COMANDO_INICIAR = "1";
+    public final String COMANDO_DISCO_MODE = "2";
+    public final String COMANDO_MOVER_IZQUIERDA = "3";
+    public final String COMANDO_MOVER_DERECHA = "4";
+    public final String COMANDO_LUCES_PRENDER = "10";
+    public final String COMANDO_LUCES_APAGAR = "11";
 
     private static Singleton instance;
     private double pesoCanastoBrillante;
@@ -67,9 +74,7 @@ public class Singleton {
         return cantidadElementosCanastoBrillante;
     }
 
-    public int getCantidadElementosCanastoNoBrillante() {
-        return cantidadElementosCanastoNoBrillante;
-    }
+    public int getCantidadElementosCanastoNoBrillante() { return cantidadElementosCanastoNoBrillante; }
 
     public String getMacAVincular() {
         return macAVincular;
@@ -99,33 +104,21 @@ public class Singleton {
         return inputStream;
     }
 
-    public void setPesoCanastoBrillante(double pesoCanastoBrillante) {
-        this.pesoCanastoBrillante = pesoCanastoBrillante;
-    }
+    public void setPesoCanastoBrillante(double pesoCanastoBrillante) { this.pesoCanastoBrillante = pesoCanastoBrillante; }
 
-    public void setPesoCanastoNoBrillante(double pesoCanastoNoBrillante) {
-        this.pesoCanastoNoBrillante = pesoCanastoNoBrillante;
-    }
+    public void setPesoCanastoNoBrillante(double pesoCanastoNoBrillante) { this.pesoCanastoNoBrillante = pesoCanastoNoBrillante; }
 
-    public void setCantidadElementosCanastoBrillante(int cantidadElementosCanastoBrillante) {
-        this.cantidadElementosCanastoBrillante = cantidadElementosCanastoBrillante;
-    }
+    public void setCantidadElementosCanastoBrillante(int cantidadElementosCanastoBrillante) { this.cantidadElementosCanastoBrillante = cantidadElementosCanastoBrillante; }
 
-    public void setCantidadElementosCanastoNoBrillante(int cantidadElementosCanastoNoBrillante) {
-        this.cantidadElementosCanastoNoBrillante = cantidadElementosCanastoNoBrillante;
-    }
+    public void setCantidadElementosCanastoNoBrillante(int cantidadElementosCanastoNoBrillante) { this.cantidadElementosCanastoNoBrillante = cantidadElementosCanastoNoBrillante; }
 
     public void setMacAVincular(String macAVincular) {
         this.macAVincular = macAVincular;
     }
 
-    public void setContenedorBrillantesFull(boolean contenedorBrillantesFull) {
-        this.contenedorBrillantesFull = contenedorBrillantesFull;
-    }
+    public void setContenedorBrillantesFull(boolean contenedorBrillantesFull) { this.contenedorBrillantesFull = contenedorBrillantesFull; }
 
-    public void setContenedorNoBrillantesFull(boolean contenedorNoBrillantesFull) {
-        this.contenedorNoBrillantesFull = contenedorNoBrillantesFull;
-    }
+    public void setContenedorNoBrillantesFull(boolean contenedorNoBrillantesFull) { this.contenedorNoBrillantesFull = contenedorNoBrillantesFull; }
 
     public void setCantidadSacudidas(int cantidadSacudidas) { this.cantidadSacudidas = cantidadSacudidas; }
 

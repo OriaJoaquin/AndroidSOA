@@ -33,8 +33,7 @@ public class AnalizarObjetoActivity extends AppCompatActivity {
 
     private void iniciarProceso(View v) {
         if(singleton.isConectado()){
-            String comando = "1";
-            singleton.enviarComandoBluetooth(comando);
+            singleton.enviarComandoBluetooth(singleton.COMANDO_INICIAR);
         } else {
             singleton.showToast("Debés estar conectado al bluetooth para realizar esta acción.", getApplicationContext());
         }

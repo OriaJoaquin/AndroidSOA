@@ -52,6 +52,18 @@ public class DiscoModeActivity extends AppCompatActivity {
         mSensorManager.unregisterListener(sensorListener);
     }
 
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+
+        if(singleton.isConectado()){
+
+            singleton.enviarComandoBluetooth(singleton.COMANDO_RESET);
+        } else {
+            singleton.showToast("Debés estar conectado al bluetooth para realizar esta acción.", getApplicationContext());
+        }
+    }
+
 
     private final SensorEventListener sensorListener = new SensorEventListener() {
         @Override
@@ -69,8 +81,7 @@ public class DiscoModeActivity extends AppCompatActivity {
                 singleton.setCantidadSacudidas(singleton.getCantidadSacudidas() + 1);
                 if (singleton.getCantidadSacudidas() >= 3) {
                     if(singleton.isConectado()){
-                        String comando = "2";
-                        singleton.enviarComandoBluetooth(comando);
+                        singleton.enviarComandoBluetooth(singleton.COMANDO_DISCO_MODE);
 
                         imgCarlton.setVisibility(View.VISIBLE);
                         singleton.showToast("Modo disco!!!", getApplicationContext());

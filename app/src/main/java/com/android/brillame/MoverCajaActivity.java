@@ -79,8 +79,7 @@ public class MoverCajaActivity extends AppCompatActivity {
                     tvOrientacion.setText("IZQUIERDA");
 
                     if(singleton.isConectado()){
-                        String comando = "3";
-                        singleton.enviarComandoBluetooth(comando);
+                        singleton.enviarComandoBluetooth(singleton.COMANDO_MOVER_IZQUIERDA);
                     } else {
                         singleton.showToast("Debés estar conectado al bluetooth para realizar esta acción.", getApplicationContext());
                     }
@@ -101,8 +100,7 @@ public class MoverCajaActivity extends AppCompatActivity {
                     tvOrientacion.setText("DERECHA");
 
                     if(singleton.isConectado()){
-                        String comando = "4";
-                        singleton.enviarComandoBluetooth(comando);
+                        singleton.enviarComandoBluetooth(singleton.COMANDO_MOVER_DERECHA);
                     } else {
                         singleton.showToast("Debés estar conectado al bluetooth para realizar esta acción.", getApplicationContext());
                     }
