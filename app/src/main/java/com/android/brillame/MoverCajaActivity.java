@@ -13,6 +13,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.EmptyStackException;
 
 public class MoverCajaActivity extends AppCompatActivity {
@@ -25,6 +26,7 @@ public class MoverCajaActivity extends AppCompatActivity {
     private TextView tv;
     private TextView tvOrientacion;
     private ImageView imgFlecha;
+    private Singleton singleton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,8 @@ public class MoverCajaActivity extends AppCompatActivity {
 
         tv = this.findViewById(R.id.tv);
         tvOrientacion = this.findViewById(R.id.tvOrientacion);
+
+        singleton = singleton.getInstance();
 
         configurarSensor();
         setearImagenes();
@@ -75,6 +79,13 @@ public class MoverCajaActivity extends AppCompatActivity {
                     imgFlecha.setImageResource(R.drawable.ic_arrow_left_solid);
                     estadoActual = ESTADO_IZQUIERDA;
                     tvOrientacion.setText("IZQUIERDA");
+
+                    try {
+                        String comando = "3";
+                        singleton.getOutputStream().write(comando.getBytes());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 } else if (estadoActual == ESTADO_DERECHA){
                     imgFlecha.setImageResource(R.drawable.ic_arrow_up_solid);
                     estadoActual = ESTADO_CENTRO;
@@ -89,6 +100,15 @@ public class MoverCajaActivity extends AppCompatActivity {
                     imgFlecha.setImageResource(R.drawable.ic_arrow_right_solid);
                     estadoActual = ESTADO_DERECHA;
                     tvOrientacion.setText("DERECHA");
+
+
+                    try {
+                        String comando = "4";
+                        singleton.getOutputStream().write(comando.getBytes());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                 } else if (estadoActual == ESTADO_IZQUIERDA){
                     imgFlecha.setImageResource(R.drawable.ic_arrow_up_solid);
                     estadoActual = ESTADO_CENTRO;
