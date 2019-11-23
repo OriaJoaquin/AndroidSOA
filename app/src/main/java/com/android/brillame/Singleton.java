@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -40,6 +41,14 @@ public class Singleton {
         contenedorBrillantesFull = false;
         contenedorNoBrillantesFull = false;
         cantidadSacudidas = 0;
+    }
+
+    public void enviarComandoBluetooth(String comando){
+        try {
+            this.getOutputStream().write(comando.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();e.printStackTrace();
+        }
     }
 
     public void showToast(String msg, Context context) {
@@ -118,9 +127,7 @@ public class Singleton {
         this.contenedorNoBrillantesFull = contenedorNoBrillantesFull;
     }
 
-    public void setCantidadSacudidas(int cantidadSacudidas) {
-        this.cantidadSacudidas = cantidadSacudidas;
-    }
+    public void setCantidadSacudidas(int cantidadSacudidas) { this.cantidadSacudidas = cantidadSacudidas; }
 
     public void setSocket(BluetoothSocket socket) {
         this.socket = socket;

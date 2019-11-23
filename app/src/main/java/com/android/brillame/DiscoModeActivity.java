@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import java.io.IOException;
 
 public class DiscoModeActivity extends AppCompatActivity {
     private Singleton singleton;
@@ -69,19 +68,16 @@ public class DiscoModeActivity extends AppCompatActivity {
             if (shake > 5) {
                 singleton.setCantidadSacudidas(singleton.getCantidadSacudidas() + 1);
                 if (singleton.getCantidadSacudidas() >= 3) {
-                    try {
-                        if(singleton.isConectado()){
-                            //COMUNICACION CON BT
-                            singleton.showToast("Modo disco!!!", getApplicationContext());
-                            String comando = "2";
+                    if(singleton.isConectado()){
+                        //COMUNICACION CON BT
+                        singleton.showToast("Modo disco!!!", getApplicationContext());
 
-                            singleton.getOutputStream().write(comando.getBytes());
-                            imgCarlton.setVisibility(View.VISIBLE);
-                        } else {
-                            singleton.showToast("Debés estar conectado al bluetooth para realizar esta acción.", getApplicationContext());
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        String comando = "2";
+                        singleton.enviarComandoBluetooth(comando);
+
+                        imgCarlton.setVisibility(View.VISIBLE);
+                    } else {
+                        singleton.showToast("Debés estar conectado al bluetooth para realizar esta acción.", getApplicationContext());
                     }
                 }
                 else{

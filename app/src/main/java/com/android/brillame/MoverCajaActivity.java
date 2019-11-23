@@ -1,20 +1,17 @@
 package com.android.brillame;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
-import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.util.EmptyStackException;
 
 public class MoverCajaActivity extends AppCompatActivity {
 
@@ -80,12 +77,13 @@ public class MoverCajaActivity extends AppCompatActivity {
                     estadoActual = ESTADO_IZQUIERDA;
                     tvOrientacion.setText("IZQUIERDA");
 
-                    try {
+                    if(singleton.isConectado()){
                         String comando = "3";
-                        singleton.getOutputStream().write(comando.getBytes());
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        singleton.enviarComandoBluetooth(comando);
+                    } else {
+                        singleton.showToast("Debés estar conectado al bluetooth para realizar esta acción.", getApplicationContext());
                     }
+
                 } else if (estadoActual == ESTADO_DERECHA){
                     imgFlecha.setImageResource(R.drawable.ic_arrow_up_solid);
                     estadoActual = ESTADO_CENTRO;
@@ -101,14 +99,12 @@ public class MoverCajaActivity extends AppCompatActivity {
                     estadoActual = ESTADO_DERECHA;
                     tvOrientacion.setText("DERECHA");
 
-
-                    try {
+                    if(singleton.isConectado()){
                         String comando = "4";
-                        singleton.getOutputStream().write(comando.getBytes());
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        singleton.enviarComandoBluetooth(comando);
+                    } else {
+                        singleton.showToast("Debés estar conectado al bluetooth para realizar esta acción.", getApplicationContext());
                     }
-
                 } else if (estadoActual == ESTADO_IZQUIERDA){
                     imgFlecha.setImageResource(R.drawable.ic_arrow_up_solid);
                     estadoActual = ESTADO_CENTRO;
