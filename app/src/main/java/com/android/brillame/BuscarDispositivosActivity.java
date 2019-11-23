@@ -1,30 +1,19 @@
 package com.android.brillame;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -117,7 +106,7 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 BluetoothDevice item = (BluetoothDevice) parent.getItemAtPosition(position);
                 Log.d("MAC ADDRESS", item.getAddress());
-                singleton.setValueMacAVincular(item.getAddress());
+                singleton.setMacAVincular(item.getAddress());
 
                 try {
                     singleton.setSocket(item.createRfcommSocketToServiceRecord(MY_UUID));
@@ -127,6 +116,8 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
                     singleton.setOutputStream(singleton.getSocket().getOutputStream());
 
                     singleton.setInputStream(singleton.getSocket().getInputStream());
+
+                    singleton.setConectado(true);
 
 //                    String comando = "1";
 //

@@ -3,7 +3,6 @@ package com.android.brillame;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 public class EstadisticasActivity extends AppCompatActivity {
@@ -29,10 +28,10 @@ public class EstadisticasActivity extends AppCompatActivity {
         pesoCanastoBrillante = this.findViewById(R.id.lblCestoBrillantePeso);
         pesoCanastoNoBrillante = this.findViewById(R.id.lblCestoNoBrillantePeso);
 
-        cantidadElementosCanastoBrillante.setText("Cantidad de elementos: "+ String.valueOf(singleton.getValueCantidadElementosCanastoBrillante()));
-        cantidadElementosCanastoNoBrillante.setText("Cantidad de elementos: "+ String.valueOf(singleton.getValueCantidadElementosCanastoNoBrillante()));
-        pesoCanastoBrillante.setText("Peso Total:" + String.valueOf( singleton.getValuePesoCanastoBrillante()) + " kg");
-        pesoCanastoNoBrillante.setText("Peso Total:" + String.valueOf( singleton.getValuePesoCanastoNoBrillante()) + " kg");
+        cantidadElementosCanastoBrillante.setText("Cantidad de elementos: "+ String.valueOf(singleton.getCantidadElementosCanastoBrillante()));
+        cantidadElementosCanastoNoBrillante.setText("Cantidad de elementos: "+ String.valueOf(singleton.getCantidadElementosCanastoNoBrillante()));
+        pesoCanastoBrillante.setText("Peso Total:" + String.valueOf( singleton.getPesoCanastoBrillante()) + " kg");
+        pesoCanastoNoBrillante.setText("Peso Total:" + String.valueOf( singleton.getPesoCanastoNoBrillante()) + " kg");
 
 
     }

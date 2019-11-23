@@ -8,7 +8,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -45,7 +44,7 @@ public class DiscoModeActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         singleton.showToast("Sacude el teléfono para activar el modo disco!!", this);
-        singleton.setValuesacudidas(0);
+        singleton.setCantidadSacudidas(0);
     }
 
     @Override
@@ -68,20 +67,26 @@ public class DiscoModeActivity extends AppCompatActivity {
             shake = shake * 0.9F + delta;
 
             if (shake > 5) {
-                singleton.setValuesacudidas(singleton.getValuesacudidas().intValue()+1);
-                if (singleton.getValuesacudidas().intValue() >= 2) {
-                    //COMUNICACION CON BT
-                    singleton.showToast("Iniciar el modo disco de la caja magica", getApplicationContext());
-                    String comando = "2";
-
+                singleton.setCantidadSacudidas(singleton.getCantidadSacudidas() + 1);
+                if (singleton.getCantidadSacudidas() >= 3) {
                     try {
-                        singleton.getOutputStream().write(comando.getBytes());
-                        imgCarlton.setVisibility(View.VISIBLE);
+                        if(singleton.isConectado()){
+                            //COMUNICACION CON BT
+                            singleton.showToast("Modo disco!!!", getApplicationContext());
+                            String comando = "2";
+
+                            singleton.getOutputStream().write(comando.getBytes());
+                            imgCarlton.setVisibility(View.VISIBLE);
+                        } else {
+                            singleton.showToast("Debés estar conectado al bluetooth para realizar esta acción.", getApplicationContext());
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
                 else{
+                    String mensaje = String.format("Faltan %d sacudidas.", 3 - singleton.getCantidadSacudidas());
+                    singleton.showToast(mensaje, getApplicationContext());
                 }
             }
         }

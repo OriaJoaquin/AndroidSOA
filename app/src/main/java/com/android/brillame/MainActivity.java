@@ -6,21 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.os.Vibrator;
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.content.Intent;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
-import android.widget.ToggleButton;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -68,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     public void onResume(){
         super.onResume();
 
-        boolean estaLleno =  singleton.getValuecontenedorBrillantesFull() || singleton.getValuecontenedorNoBrillantesFull();
+        boolean estaLleno =  singleton.isContenedorBrillantesFull() || singleton.isContenedorNoBrillantesFull();
 
         if(estaLleno){
             btnAbrirActivityAnalizarObjeto.setEnabled(false);
@@ -142,8 +130,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void abrirActivityEstadistica(View view) {
-        singleton.setValuecontenedorBrillantesFull(true);
-        Log.d("pru",String.valueOf(singleton.getValuecontenedorBrillantesFull()));
         Intent intent = new Intent(this, EstadisticasActivity.class);
         startActivity(intent);
     }

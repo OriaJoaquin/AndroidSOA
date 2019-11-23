@@ -2,7 +2,6 @@ package com.android.brillame;
 
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.io.InputStream;
@@ -11,18 +10,17 @@ import java.io.OutputStream;
 public class Singleton {
 
     private static Singleton instance;
-    private Number pesoCanastoBrillante;
-    private Number pesoCanastoNoBrillante;
-    private Number cantidadElementosCanastoBrillante;
-    private Number cantidadElementosCanastoNoBrillante;
+    private double pesoCanastoBrillante;
+    private double pesoCanastoNoBrillante;
+    private int cantidadElementosCanastoBrillante;
+    private int cantidadElementosCanastoNoBrillante;
     private String macAVincular;
     private boolean contenedorBrillantesFull;
     private boolean contenedorNoBrillantesFull;
-    private Number sacudidas;
-
-
+    private int cantidadSacudidas;
 
     BluetoothSocket socket;
+    private boolean conectado;
     private OutputStream outputStream;
     private InputStream inputStream;
 
@@ -41,76 +39,43 @@ public class Singleton {
         macAVincular = "";
         contenedorBrillantesFull = false;
         contenedorNoBrillantesFull = false;
-        sacudidas = 0;
-    }
-
-    public Number getValuePesoCanastoBrillante() {
-        return pesoCanastoBrillante;
-    }
-
-    public Number getValuePesoCanastoNoBrillante() {
-        return pesoCanastoNoBrillante;
-    }
-
-    public Number getValueCantidadElementosCanastoBrillante() {
-        return cantidadElementosCanastoBrillante;
-    }
-
-    public Number getValuesacudidas() {
-        return sacudidas;
-    }
-    public Number getValueCantidadElementosCanastoNoBrillante() {
-        return cantidadElementosCanastoNoBrillante;
-    }
-
-    public String getValueMacAVincular() {
-        return macAVincular;
-    }
-
-    public boolean getValuecontenedorBrillantesFull() {
-        return contenedorBrillantesFull;
-    }
-
-    public boolean getValuecontenedorNoBrillantesFull() {
-        return contenedorNoBrillantesFull;
-    }
-
-
-    public void setValuePesoCanastoBrillante(Number value) {
-        this.pesoCanastoBrillante = value;
-    }
-
-    public void setValuePesoCanastoNoBrillante(Number value) {
-        this.pesoCanastoNoBrillante = value;
-    }
-
-    public void setValueCantidadElementosCanastoBrillante(Number value) {
-        this.cantidadElementosCanastoBrillante = value;
-    }
-
-    public void setValueCantidadElementosCanastoNoBrillante(Number value) {
-        this.cantidadElementosCanastoNoBrillante = value;
-    }
-
-    public void setValueMacAVincular(String value) {
-        this.macAVincular = value;
-    }
-
-    public void setValuecontenedorBrillantesFull(boolean lleno) {
-        contenedorBrillantesFull = lleno;
-    }
-
-    public void setValuecontenedorNoBrillantesFull(boolean lleno) {
-        contenedorNoBrillantesFull = lleno;
-    }
-
-    public void setValuesacudidas(Number value){
-        sacudidas = value;
+        cantidadSacudidas = 0;
     }
 
     public void showToast(String msg, Context context) {
-        // Toast.makeText(this,msg, Toast.LENGTH_LONG).show();
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    public double getPesoCanastoBrillante() {
+        return pesoCanastoBrillante;
+    }
+
+    public double getPesoCanastoNoBrillante() {
+        return pesoCanastoNoBrillante;
+    }
+
+    public int getCantidadElementosCanastoBrillante() {
+        return cantidadElementosCanastoBrillante;
+    }
+
+    public int getCantidadElementosCanastoNoBrillante() {
+        return cantidadElementosCanastoNoBrillante;
+    }
+
+    public String getMacAVincular() {
+        return macAVincular;
+    }
+
+    public boolean isContenedorBrillantesFull() {
+        return contenedorBrillantesFull;
+    }
+
+    public boolean isContenedorNoBrillantesFull() {
+        return contenedorNoBrillantesFull;
+    }
+
+    public int getCantidadSacudidas() {
+        return cantidadSacudidas;
     }
 
     public BluetoothSocket getSocket() {
@@ -125,6 +90,38 @@ public class Singleton {
         return inputStream;
     }
 
+    public void setPesoCanastoBrillante(double pesoCanastoBrillante) {
+        this.pesoCanastoBrillante = pesoCanastoBrillante;
+    }
+
+    public void setPesoCanastoNoBrillante(double pesoCanastoNoBrillante) {
+        this.pesoCanastoNoBrillante = pesoCanastoNoBrillante;
+    }
+
+    public void setCantidadElementosCanastoBrillante(int cantidadElementosCanastoBrillante) {
+        this.cantidadElementosCanastoBrillante = cantidadElementosCanastoBrillante;
+    }
+
+    public void setCantidadElementosCanastoNoBrillante(int cantidadElementosCanastoNoBrillante) {
+        this.cantidadElementosCanastoNoBrillante = cantidadElementosCanastoNoBrillante;
+    }
+
+    public void setMacAVincular(String macAVincular) {
+        this.macAVincular = macAVincular;
+    }
+
+    public void setContenedorBrillantesFull(boolean contenedorBrillantesFull) {
+        this.contenedorBrillantesFull = contenedorBrillantesFull;
+    }
+
+    public void setContenedorNoBrillantesFull(boolean contenedorNoBrillantesFull) {
+        this.contenedorNoBrillantesFull = contenedorNoBrillantesFull;
+    }
+
+    public void setCantidadSacudidas(int cantidadSacudidas) {
+        this.cantidadSacudidas = cantidadSacudidas;
+    }
+
     public void setSocket(BluetoothSocket socket) {
         this.socket = socket;
     }
@@ -135,5 +132,13 @@ public class Singleton {
 
     public void setInputStream(InputStream inputStream) {
         this.inputStream = inputStream;
+    }
+
+    public boolean isConectado() {
+        return conectado;
+    }
+
+    public void setConectado(boolean conectado) {
+        this.conectado = conectado;
     }
 }
