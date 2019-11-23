@@ -46,10 +46,10 @@ public class AdapterBluetoothDevice extends BaseAdapter {
 
         BluetoothDevice dir = items.get(position);
 
-        TextView title = (TextView) v.findViewById(R.id.valor);
+        TextView title = v.findViewById(R.id.valor);
         title.setText(dir.getAddress());
 
-        TextView description = (TextView) v.findViewById(R.id.texto);
+        TextView description = v.findViewById(R.id.texto);
         description.setText(dir.getName());
 
         return v;

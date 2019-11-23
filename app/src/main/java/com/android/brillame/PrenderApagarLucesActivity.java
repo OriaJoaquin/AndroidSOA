@@ -13,9 +13,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 public class PrenderApagarLucesActivity extends AppCompatActivity {
-    private SensorManager mSensorManager;
-    private Sensor mProximity;
-    private static final int SENSOR_SENSITIVITY = 4;
+    SensorManager mSensorManager;
     ImageView imagenFoco;
 
     @Override
@@ -30,7 +28,6 @@ public class PrenderApagarLucesActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //  mSensorManager.registerListener(this, mProximity, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
@@ -48,16 +45,14 @@ public class PrenderApagarLucesActivity extends AppCompatActivity {
         @Override
         public void onSensorChanged(SensorEvent event) {
             if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
-              //  if ((event.values[0] >= -SENSOR_SENSITIVITY) && (event.values[0] <= SENSOR_SENSITIVITY)) {
                 if (event.values[0] == 0) {
-                    //near
                     //COMUNICACION CON BT
-                    Toast.makeText(getApplicationContext(), "Encender luces del led", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Encender luces del led", Toast.LENGTH_SHORT).show();
                     imagenFoco.setImageResource(R.mipmap.light_on);
                 } else {
                     //far
                     imagenFoco.setImageResource(R.mipmap.light_off);
-                    Toast.makeText(getApplicationContext(), "far", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "far", Toast.LENGTH_SHORT).show();
                 }
             }
         }

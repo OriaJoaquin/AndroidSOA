@@ -15,15 +15,16 @@ import android.widget.TextView;
 
 public class MoverCajaActivity extends AppCompatActivity {
 
-    private static final int ESTADO_IZQUIERDA = 0;
-    private static final int ESTADO_CENTRO = 1;
-    private static final int ESTADO_DERECHA= 2;
-    private int estadoActual;
-    private SensorManager mSensorManager;
-    private TextView tv;
-    private TextView tvOrientacion;
-    private ImageView imgFlecha;
-    private Singleton singleton;
+     private static final int ESTADO_IZQUIERDA = 0;
+     private static final int ESTADO_CENTRO = 1;
+     private static final int ESTADO_DERECHA= 2;
+
+     int estadoActual;
+     SensorManager mSensorManager;
+     TextView tv;
+     TextView tvOrientacion;
+     ImageView imgFlecha;
+     Singleton singleton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

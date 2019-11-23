@@ -29,10 +29,6 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
     ListView listaView;
     Singleton singleton;
 
-    /*BluetoothSocket socket;
-    private OutputStream outputStream;
-    private InputStream inputStream;*/
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,16 +84,6 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
     private void configurarBluetooth() {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-//        RecyclerView recyclerView = findViewById(R.id.rvContacts);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        recyclerView.setAdapter(mDispositivoAdapter);
-//        IntentFilter filterBusqueda = new IntentFilter();
-
-//        filterBusqueda.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-//        filterBusqueda.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-//        filterBusqueda.addAction(BluetoothDevice.ACTION_FOUND);
-//
-//        registerReceiver(mBroadcastReceiver, filterBusqueda);
 
         listaView = findViewById(R.id.listaDispositivos);
 
@@ -118,10 +104,6 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
                     singleton.setInputStream(singleton.getSocket().getInputStream());
 
                     singleton.setConectado(true);
-
-//                    String comando = "1";
-//
-//                    singleton.getOutputStream().write(comando.getBytes());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -130,9 +112,9 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
         });
 
         habilitarBotones();
-
     }
-    public void habilitarBotones(){
+
+    private void habilitarBotones(){
         if (!mBluetoothAdapter.isEnabled()) {
             btnBuscarDispositivos.setEnabled(false);
             btnDetenerBusqueda.setEnabled(false);
@@ -180,15 +162,6 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
             Log.d(TAG, "onVerVinculadosClick : Bluetooth desactivado o no hay dispositivos vinculados.");
         } else {
             Log.d(TAG, "onVerVinculadosClick : Hay " + setDispositivos.size() + " dispositivos vinculados");
-
-
-            /*if (setDispositivos.size() > 0) {
-                for (BluetoothDevice currentDevice : setDispositivos) {
-                    Log.i(TAG, "Device Name " + currentDevice.getName());
-                    Log.i(TAG, "Device Name " + currentDevice.getAddress());
-
-                }
-            }*/
 
             ArrayList<BluetoothDevice> dispositivos = new ArrayList<>();
             dispositivos.addAll(setDispositivos);

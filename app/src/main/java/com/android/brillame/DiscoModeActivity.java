@@ -13,13 +13,13 @@ import android.widget.ImageView;
 
 
 public class DiscoModeActivity extends AppCompatActivity {
-    private Singleton singleton;
-    private SensorManager mSensorManager;
+    Singleton singleton;
+    SensorManager mSensorManager;
 
-    private float aceleracionValor;
-    private float ultimoAceleracionValor;
-    private float shake;
-    private ImageView imgCarlton;
+    float aceleracionValor;
+    float ultimoAceleracionValor;
+    float shake;
+    ImageView imgCarlton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,13 +69,11 @@ public class DiscoModeActivity extends AppCompatActivity {
                 singleton.setCantidadSacudidas(singleton.getCantidadSacudidas() + 1);
                 if (singleton.getCantidadSacudidas() >= 3) {
                     if(singleton.isConectado()){
-                        //COMUNICACION CON BT
-                        singleton.showToast("Modo disco!!!", getApplicationContext());
-
                         String comando = "2";
                         singleton.enviarComandoBluetooth(comando);
 
                         imgCarlton.setVisibility(View.VISIBLE);
+                        singleton.showToast("Modo disco!!!", getApplicationContext());
                     } else {
                         singleton.showToast("Debés estar conectado al bluetooth para realizar esta acción.", getApplicationContext());
                     }
