@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,13 +16,10 @@ import java.io.IOException;
 public class AnalizarObjetoActivity extends AppCompatActivity {
     Singleton singleton;
     Button btnComenzar;
+    Handler bluetoothHandler;
 
 
-    Handler bluetoothIn;
-    Thread workerThread;
-    byte[] readBuffer;
-    int readBufferPosition;
-    int counter;
+
     volatile boolean stopWorker;
     TextView myLabel;
 
@@ -40,6 +38,26 @@ public class AnalizarObjetoActivity extends AppCompatActivity {
         setearFuncionalidadBotones();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bluetoothHandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                    Bundle b =  msg.getData();
+                    String str = b.getString("Valor");
+                    if(msg.what == 1){
+                        Log.i("BUNDLE PESO", str);
+                    } else if (msg.what == 2){
+                        Log.i("BUNDLE BRILLANTE", str);
+                    } else {
+                        Log.i("BUNDLE CESTO", str);
+                    }
+            }
+        };
+    }
+
     private void setearFuncionalidadBotones(){
         btnComenzar = this.findViewById(R.id.btnComenzar);
         btnComenzar.setOnClickListener(new View.OnClickListener() {
@@ -54,69 +72,15 @@ public class AnalizarObjetoActivity extends AppCompatActivity {
         if(singleton.isConectado()){
             singleton.enviarComandoBluetooth(singleton.COMANDO_INICIAR);
 
-            ct = new ConnectedThread(singleton.getSocket());
+            ct = new ConnectedThread(singleton.getSocket(), bluetoothHandler);
             ct.start();
-            //iniciarThread();
+
+
+
         } else {
             singleton.showToast("Debés estar conectado al bluetooth para realizar esta acción.", getApplicationContext());
         }
     }
-
-    private void iniciarThread() {
-        final Handler handler = new Handler();
-        final byte delimiter = 10; //This is the ASCII code for a newline character
-
-        stopWorker = false;
-        readBuffer = new byte[1024];
-        workerThread = new Thread(new Runnable()
-        {
-            public void run()
-            {
-                while(!Thread.currentThread().isInterrupted() && !stopWorker)
-                {
-                    try
-                    {
-                        int bytesAvailable = singleton.getInputStream().available();
-                        if(bytesAvailable > 0)
-                        {
-                            byte[] packetBytes = new byte[bytesAvailable];
-                            singleton.getInputStream().read(packetBytes);
-                            for(int i=0;i<bytesAvailable;i++)
-                            {
-                                byte b = packetBytes[i];
-                                if(delimiter == b)
-                                {
-                                    byte[] encodedBytes = new byte[readBufferPosition];
-                                    System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
-                                    final String data = new String(encodedBytes, "US-ASCII");
-                                    readBufferPosition = 0;
-
-                                    handler.post(new Runnable()
-                                    {
-                                        public void run()
-                                        {
-                                            myLabel.setText(myLabel.getText() + "        " + data);
-                                        }
-                                    });
-                                }
-                                else
-                                {
-                                    readBuffer[readBufferPosition++] = b;
-                                }
-                            }
-                        }
-                    }
-                    catch (IOException ex)
-                    {
-                        stopWorker = true;
-                    }
-                }
-            }
-        });
-
-        workerThread.start();
-    }
-
 
     protected void onDestroy(){
         super.onDestroy();

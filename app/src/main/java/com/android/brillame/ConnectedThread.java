@@ -1,6 +1,8 @@
 package com.android.brillame;
 
 import android.bluetooth.BluetoothSocket;
+import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
@@ -12,10 +14,18 @@ public class ConnectedThread extends Thread {
     private final BluetoothSocket mmSocket;
     private final InputStream mmInStream;
     private final OutputStream mmOutStream;
-    private byte[] mmBuffer; // mmBuffer store for the stream
     private final String TAG = "Debug";
+    byte[] mmBuffer; // mmBuffer store for the stream
 
-    public ConnectedThread(BluetoothSocket socket) {
+    int contadorParametros = 0;
+    String key;
+
+    Handler handler;
+
+
+
+
+    public ConnectedThread(BluetoothSocket socket, Handler handler) {
         mmSocket = socket;
         InputStream tmpIn = null;
         OutputStream tmpOut = null;
@@ -35,6 +45,7 @@ public class ConnectedThread extends Thread {
 
         mmInStream = tmpIn;
         mmOutStream = tmpOut;
+        this.handler = handler;
     }
 
     public void run() {
@@ -46,10 +57,29 @@ public class ConnectedThread extends Thread {
             try {
                 // Read from the InputStream.
                 numBytes = mmInStream.read(mmBuffer);
+
                 // Send the obtained bytes to the UI activity.
                 if (numBytes > 0){
                     String str = new String(mmBuffer,0,numBytes);
                     Log.i("DATA BLUETOOTH", str);
+                    //mmInStream.reset();
+                    //numBytes = mmInStream.read(mmBuffer);
+
+                    // Send the obtained bytes to the UI activity.
+//                    Message readMsg = handler.obtainMessage(
+//                            MessageConstants.MESSAGE_READ, numBytes, -1,
+//                            mmBuffer);
+//                    readMsg.sendToTarget();
+                    //contadorParametros++;
+
+
+                    Message msg = handler.obtainMessage();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Valor", str);
+                    msg.what = contadorParametros;
+                    msg.setData(bundle);
+                    handler.sendMessage(msg);
+
                 }
             } catch (IOException e) {
                 Log.d(TAG, "Input stream was disconnected", e);
