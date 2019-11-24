@@ -22,8 +22,7 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
     private static final int REQUEST_ENABLE_BT = 0;
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private BluetoothAdapter mBluetoothAdapter;
-    Button btnBuscarDispositivos;
-    Button btnDetenerBusqueda;
+
     Button btnVerVinculados;
     Button btnBluetoothOn;
     ListView listaView;
@@ -47,24 +46,8 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
     }
 
     private void setearFuncionalidadBotones() {
-        btnBuscarDispositivos = this.findViewById(R.id.iniciarBusqueda);
-        btnDetenerBusqueda = this.findViewById(R.id.detenerBusqueda);
         btnVerVinculados = this.findViewById(R.id.verVinculados);
         btnBluetoothOn = this.findViewById(R.id.btnBluetoothOn);
-
-        btnBuscarDispositivos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onIniciarBusquedaClick(v);
-            }
-        });
-
-        this.btnDetenerBusqueda.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onDetenerBusquedaClick(v);
-            }
-        });
 
         this.btnVerVinculados.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +87,9 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
                     singleton.setInputStream(singleton.getSocket().getInputStream());
 
                     singleton.setConectado(true);
+
+                    listaView.setVisibility(View.INVISIBLE);
+                    singleton.showToast("Conectado con el dispositivo.",getApplicationContext());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -116,15 +102,10 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
 
     private void habilitarBotones(){
         if (!mBluetoothAdapter.isEnabled()) {
-            btnBuscarDispositivos.setEnabled(false);
-            btnDetenerBusqueda.setEnabled(false);
             btnVerVinculados.setEnabled(false);
         }
         else{
-            btnBuscarDispositivos.setEnabled(true);
-            btnDetenerBusqueda.setEnabled(true);
             btnVerVinculados.setEnabled(true);
-
         }
     }
 
@@ -132,25 +113,6 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
     protected void onDestroy() {
         //unregisterReceiver(mBroadcastReceiver);
         super.onDestroy();
-    }
-
-    public void onIniciarBusquedaClick(View view) {
-        if (mBluetoothAdapter.isDiscovering()) {
-            Log.d(TAG, "onIniciarBusquedaClick : Ya se estan buscando dispositivos");
-        } else if (mBluetoothAdapter.startDiscovery()) {
-            Log.d(TAG, "onIniciarBusquedaClick : Buscando dispositivos");
-        } else {
-            Log.d(TAG, "onIniciarBusquedaClick : Error al buscar dispositivos");
-        }
-    }
-
-    public void onDetenerBusquedaClick(View view) {
-        if (mBluetoothAdapter.cancelDiscovery()) {
-            Log.d(TAG, "onDetenerBusquedaClick : Deteniendo la busqueda de dispositivos");
-        } else {
-            Log.d(TAG, "onDetenerBusquedaClick : Error al detener la busqueda de dispositivos");
-        }
-
     }
 
     public void onVerVinculadosClick(View view) {
@@ -197,7 +159,6 @@ public class BuscarDispositivosActivity extends AppCompatActivity {
             else{
                 //rechazaste el encendido de bt
                 singleton.showToast("Rechazaste el encendido de bluetooth...",this);
-
             }
         }
     }

@@ -21,18 +21,6 @@
             android:text="On"/>
 
         <Button
-            android:id="@+id/iniciarBusqueda"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Iniciar Busqueda" />
-
-        <Button
-            android:id="@+id/detenerBusqueda"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Detener Busqueda" />
-
-        <Button
             android:id="@+id/verVinculados"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

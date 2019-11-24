@@ -10,6 +10,8 @@ public class EstadisticasActivity extends AppCompatActivity {
     TextView cantidadElementosCanastoNoBrillante;
     TextView pesoCanastoBrillante;
     TextView pesoCanastoNoBrillante;
+    TextView canastoBrillanteLleno;
+    TextView CanastoNoBrillanteLleno;
     Singleton singleton;
 
 
@@ -27,11 +29,15 @@ public class EstadisticasActivity extends AppCompatActivity {
         cantidadElementosCanastoNoBrillante = this.findViewById(R.id.lblCestoNoBrillanteCantidad);
         pesoCanastoBrillante = this.findViewById(R.id.lblCestoBrillantePeso);
         pesoCanastoNoBrillante = this.findViewById(R.id.lblCestoNoBrillantePeso);
+        canastoBrillanteLleno = this.findViewById(R.id.lblCestoBrillanteLleno);
+        CanastoNoBrillanteLleno = this.findViewById(R.id.lblCestoNoBrillanteLleno);
 
-        cantidadElementosCanastoBrillante.setText("Cantidad de elementos: "+ String.valueOf(singleton.getCantidadElementosCanastoBrillante()));
-        cantidadElementosCanastoNoBrillante.setText("Cantidad de elementos: "+ String.valueOf(singleton.getCantidadElementosCanastoNoBrillante()));
-        pesoCanastoBrillante.setText("Peso Total:" + String.valueOf( singleton.getPesoCanastoBrillante()) + " kg");
-        pesoCanastoNoBrillante.setText("Peso Total:" + String.valueOf( singleton.getPesoCanastoNoBrillante()) + " kg");
+        cantidadElementosCanastoBrillante.setText("Cantidad de elementos: " + String.valueOf(singleton.getCantidadElementosCanastoBrillante()));
+        cantidadElementosCanastoNoBrillante.setText("Cantidad de elementos: " + String.valueOf(singleton.getCantidadElementosCanastoNoBrillante()));
+        pesoCanastoBrillante.setText("Peso Total:" + String.valueOf(singleton.getPesoCanastoBrillante()) + " kg");
+        pesoCanastoNoBrillante.setText("Peso Total:" + String.valueOf(singleton.getPesoCanastoNoBrillante()) + " kg");
+        canastoBrillanteLleno.setText("Lleno:" + String.valueOf(singleton.isContenedorBrillantesFull() ? "Si" : "No"));
+        CanastoNoBrillanteLleno.setText("Lleno:" + String.valueOf(singleton.isContenedorNoBrillantesFull() ? "Si" : "No"));
 
 
     }

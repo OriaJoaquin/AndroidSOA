@@ -12,6 +12,14 @@
         android:orientation="vertical"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp">
+        <TextView
+            android:id="@+id/lblTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#f65034"
+            android:textSize="30sp"
+            android:text="Disco Mode"
+            android:layout_marginLeft="2dp"/>
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/imgCarlton"
             android:layout_width="match_parent"

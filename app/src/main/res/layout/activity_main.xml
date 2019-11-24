@@ -30,7 +30,7 @@
             android:id="@+id/btnAnalizarObjeto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Iniciar" />
+            android:text="Analizar objeto" />
 
         <Button
             android:id="@+id/btnEstadisticas"

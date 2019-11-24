@@ -36,6 +36,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         singleton = Singleton.getInstance();
         setearFuncionalidadBotones();
+
+        if(!singleton.isConectado()){
+            btnAbrirActivityPrenderApagarLuces.setEnabled(false);
+            btnAbrirActivityEstadisticas.setEnabled(false);
+            btnAbrirActivityDiscoMode.setEnabled(false);
+            btnAbrirActivityMoverCaja.setEnabled(false);
+            btnAbrirActivityAnalizarObjeto.setEnabled(false);
+        }
     }
 
     @Override
@@ -44,10 +52,18 @@ public class MainActivity extends AppCompatActivity {
 
         boolean estaLleno =  singleton.isContenedorBrillantesFull() || singleton.isContenedorNoBrillantesFull();
 
-        if(estaLleno){
+        /*if(estaLleno && singleton.isConectado()){
             btnAbrirActivityAnalizarObjeto.setEnabled(false);
             singleton.showToast("El cesto está lleno", this);
         } else {
+            btnAbrirActivityAnalizarObjeto.setEnabled(true);
+        }*/
+
+        if(singleton.isConectado()){
+            btnAbrirActivityPrenderApagarLuces.setEnabled(true);
+            btnAbrirActivityEstadisticas.setEnabled(true);
+            btnAbrirActivityDiscoMode.setEnabled(true);
+            btnAbrirActivityMoverCaja.setEnabled(true);
             btnAbrirActivityAnalizarObjeto.setEnabled(true);
         }
     }

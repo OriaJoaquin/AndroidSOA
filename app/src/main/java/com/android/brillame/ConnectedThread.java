@@ -15,6 +15,7 @@ public class ConnectedThread extends Thread {
     private final InputStream mmInStream;
     private final OutputStream mmOutStream;
     private final String TAG = "Debug";
+    Singleton singleton;
     byte[] mmBuffer; // mmBuffer store for the stream
 
     int contadorParametros = 0;
@@ -46,6 +47,7 @@ public class ConnectedThread extends Thread {
         mmInStream = tmpIn;
         mmOutStream = tmpOut;
         this.handler = handler;
+        singleton = singleton.getInstance();
     }
 
     public void run() {
@@ -62,21 +64,48 @@ public class ConnectedThread extends Thread {
                 if (numBytes > 0){
                     String str = new String(mmBuffer,0,numBytes);
                     Log.i("DATA BLUETOOTH", str);
-                    //mmInStream.reset();
-                    //numBytes = mmInStream.read(mmBuffer);
 
-                    // Send the obtained bytes to the UI activity.
-//                    Message readMsg = handler.obtainMessage(
-//                            MessageConstants.MESSAGE_READ, numBytes, -1,
-//                            mmBuffer);
-//                    readMsg.sendToTarget();
-                    //contadorParametros++;
+                    String [] values = str.split("\\r?\\n");
+
+
+                    double peso;
+                    boolean estaLleno;
+
+                    if(values[0] == "1"){
+                        peso =  Double.parseDouble(values[1]);
+                        singleton.setPesoCanastoBrillante(singleton.getPesoCanastoBrillante() + peso);
+                        singleton.setCantidadElementosCanastoBrillante(singleton.getCantidadElementosCanastoBrillante() + 1);
+                        estaLleno = Boolean.getBoolean(values[2]);
+                        singleton.setContenedorBrillantesFull(estaLleno);
+                    } else {
+                        peso =  Double.parseDouble(values[1]);
+                        singleton.setPesoCanastoNoBrillante(singleton.getPesoCanastoNoBrillante() + peso);
+
+                        singleton.setCantidadElementosCanastoNoBrillante(singleton.getCantidadElementosCanastoNoBrillante() + 1);
+                        estaLleno = Boolean.getBoolean(values[2]);
+
+                        singleton.setContenedorNoBrillantesFull(estaLleno);
+                    }
 
 
                     Message msg = handler.obtainMessage();
                     Bundle bundle = new Bundle();
-                    bundle.putString("Valor", str);
-                    msg.what = contadorParametros;
+                    bundle.putString("brillante", values[0]);
+                    msg.what = 1;
+                    msg.setData(bundle);
+                    handler.sendMessage(msg);
+
+                    msg = handler.obtainMessage();
+                    bundle = new Bundle();
+                    bundle.putString("peso", values[1]);
+                    msg.what = 2;
+                    msg.setData(bundle);
+                    handler.sendMessage(msg);
+
+                    msg = handler.obtainMessage();
+                    bundle = new Bundle();
+                    bundle.putString("cesto", values[2]);
+                    msg.what = 3;
                     msg.setData(bundle);
                     handler.sendMessage(msg);
 
@@ -90,11 +119,7 @@ public class ConnectedThread extends Thread {
 
     // Call this method from the main activity to shut down the connection.
     public void cancel() {
-        try {
-            mmSocket.close();
-        } catch (IOException e) {
-            Log.e(TAG, "Could not close the connect socket", e);
-        }
+        this.interrupt();
     }
 
 

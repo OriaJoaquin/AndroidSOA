@@ -8,6 +8,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -17,11 +18,14 @@ public class AnalizarObjetoActivity extends AppCompatActivity {
     Singleton singleton;
     Button btnComenzar;
     Handler bluetoothHandler;
+    ImageView imgLoading;
+    androidx.cardview.widget.CardView cardResultado;
+    androidx.cardview.widget.CardView card;
 
 
-
-    volatile boolean stopWorker;
-    TextView myLabel;
+    TextView lblBrillante;
+    TextView lblPeso;
+    TextView lblCesto;
 
     ConnectedThread ct;
 
@@ -31,8 +35,17 @@ public class AnalizarObjetoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_analizar_objeto);
         singleton = Singleton.getInstance();
 
-        myLabel = this.findViewById(R.id.myLabel);
+        imgLoading = this.findViewById(R.id.imgLoading);
+        btnComenzar = this.findViewById(R.id.btnComenzar);
+        cardResultado = this.findViewById(R.id.cardResultado);
+        card = this.findViewById(R.id.card);
 
+        lblBrillante = this.findViewById(R.id.lblBrillante);
+        lblPeso = this.findViewById(R.id.lblPeso);
+        lblCesto = this.findViewById(R.id.lblCesto);
+
+        imgLoading.setVisibility(View.INVISIBLE);
+        cardResultado.setVisibility(View.INVISIBLE);
 
 
         setearFuncionalidadBotones();
@@ -45,15 +58,35 @@ public class AnalizarObjetoActivity extends AppCompatActivity {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                    Bundle b =  msg.getData();
-                    String str = b.getString("Valor");
-                    if(msg.what == 1){
-                        Log.i("BUNDLE PESO", str);
-                    } else if (msg.what == 2){
-                        Log.i("BUNDLE BRILLANTE", str);
+
+                Bundle b =  msg.getData();
+                String str;
+                if(msg.what == 1){
+                    str = b.getString("brillante");
+
+                    if (str == "1"){
+                        lblBrillante.setText("Objeto brillante");
                     } else {
-                        Log.i("BUNDLE CESTO", str);
+                        lblBrillante.setText("Objeto no brillante");
                     }
+
+                } else if(msg.what == 2) {
+                    str = b.getString("peso");
+
+                    lblPeso.setText("Peso: " + str);
+                } else {
+                    str = b.getString("cesto");
+
+                    if (str == "1"){
+                        lblCesto.setText("Cesto lleno: SÍ");
+                    } else {
+                        lblCesto.setText("Cesto lleno: NO");
+                    }
+
+                    imgLoading.setVisibility(View.GONE);
+                    btnComenzar.setVisibility(View.VISIBLE);
+                    cardResultado.setVisibility(View.VISIBLE);
+                }
             }
         };
     }
@@ -71,11 +104,11 @@ public class AnalizarObjetoActivity extends AppCompatActivity {
     private void iniciarProceso(View v) {
         if(singleton.isConectado()){
             singleton.enviarComandoBluetooth(singleton.COMANDO_INICIAR);
-
+            cardResultado.setVisibility(View.INVISIBLE);
+            imgLoading.setVisibility(View.VISIBLE);
+            btnComenzar.setVisibility(View.GONE);
             ct = new ConnectedThread(singleton.getSocket(), bluetoothHandler);
             ct.start();
-
-
 
         } else {
             singleton.showToast("Debés estar conectado al bluetooth para realizar esta acción.", getApplicationContext());
@@ -84,8 +117,8 @@ public class AnalizarObjetoActivity extends AppCompatActivity {
 
     protected void onDestroy(){
         super.onDestroy();
-        stopWorker = true;
-        ct.cancel();
+        if(ct != null)
+            ct.cancel();
     }
 
 }
