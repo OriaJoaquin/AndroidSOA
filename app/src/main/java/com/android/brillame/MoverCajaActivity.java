@@ -120,9 +120,9 @@ public class MoverCajaActivity extends AppCompatActivity {
             }
 
             //else it will output the Roll, Pitch and Yawn values
-            tv.setText("Orientation X (Roll) :"+ sensorEvent.values[2] +"\n"+
+            /*tv.setText("Orientation X (Roll) :"+ sensorEvent.values[2] +"\n"+
                     "Orientation Y (Pitch) :"+ sensorEvent.values[1] +"\n"+
-                    "Orientation Z (Yaw) :"+ sensorEvent.values[0]);
+                    "Orientation Z (Yaw) :"+ sensorEvent.values[0]);*/
         }
 
         @Override
