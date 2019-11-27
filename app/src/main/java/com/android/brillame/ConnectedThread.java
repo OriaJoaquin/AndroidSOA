@@ -71,7 +71,7 @@ public class ConnectedThread extends Thread {
                     double peso;
                     boolean estaLleno;
 
-                    if(values[0] == "1"){
+                    if(values[0].equals("1")){
                         peso =  Double.parseDouble(values[1]);
                         singleton.setPesoCanastoBrillante(singleton.getPesoCanastoBrillante() + peso);
                         singleton.setCantidadElementosCanastoBrillante(singleton.getCantidadElementosCanastoBrillante() + 1);

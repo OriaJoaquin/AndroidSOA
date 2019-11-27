@@ -64,7 +64,7 @@ public class AnalizarObjetoActivity extends AppCompatActivity {
                 if(msg.what == 1){
                     str = b.getString("brillante");
 
-                    if (str == "1"){
+                    if (str.equals("1")){
                         lblBrillante.setText("Objeto brillante");
                     } else {
                         lblBrillante.setText("Objeto no brillante");
@@ -77,7 +77,7 @@ public class AnalizarObjetoActivity extends AppCompatActivity {
                 } else {
                     str = b.getString("cesto");
 
-                    if (str == "1"){
+                    if (str.equals("1")){
                         lblCesto.setText("Cesto lleno: SÍ");
                     } else {
                         lblCesto.setText("Cesto lleno: NO");
