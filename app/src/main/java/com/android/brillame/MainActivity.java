@@ -52,12 +52,6 @@ public class MainActivity extends AppCompatActivity {
 
         boolean estaLleno =  singleton.isContenedorBrillantesFull() || singleton.isContenedorNoBrillantesFull();
 
-        /*if(estaLleno && singleton.isConectado()){
-            btnAbrirActivityAnalizarObjeto.setEnabled(false);
-            singleton.showToast("El cesto está lleno", this);
-        } else {
-            btnAbrirActivityAnalizarObjeto.setEnabled(true);
-        }*/
 
         if(singleton.isConectado()){
             btnAbrirActivityPrenderApagarLuces.setEnabled(true);

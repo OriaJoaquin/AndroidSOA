@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class ConnectedThread extends Thread {
+    final static String BRILLANTE = "1";
     private final BluetoothSocket mmSocket;
     private final InputStream mmInStream;
     private final OutputStream mmOutStream;
@@ -71,7 +72,7 @@ public class ConnectedThread extends Thread {
                     double peso;
                     boolean estaLleno;
 
-                    if(values[0].equals("1")){
+                    if(values[0].equals(BRILLANTE)){
                         peso =  Double.parseDouble(values[1]);
                         singleton.setPesoCanastoBrillante(singleton.getPesoCanastoBrillante() + peso);
                         singleton.setCantidadElementosCanastoBrillante(singleton.getCantidadElementosCanastoBrillante() + 1);
